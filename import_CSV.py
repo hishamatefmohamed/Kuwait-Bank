@@ -13,7 +13,7 @@ size = df.index.size
 output1 = sqldf(
     " select Name,Brand from (SELECT count(*) as x, Name, Brand FROM df GROUP BY  Name, Brand  order by count(*) desc ) group by Name,Brand ")
 
-query0 = f"SELECT p.Name,SUM(b.Quantity)/{size} as sumof_Quantity FROM  df p INNER JOIN df b ON p.Id=b.Id GROUP BY  p.Name"
+query0 = f"SELECT p.Name,  CAST(sum(b.Quantity) AS float)/ {size} as sumof_Quantity FROM  df p INNER JOIN df b ON p.Id=b.Id GROUP BY  p.Name"
 
 output0 = sqldf(query0)
 z = df.describe(include='all')
